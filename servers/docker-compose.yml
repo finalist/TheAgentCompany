@@ -91,12 +91,14 @@ services:
       - "${BIND_IP:-0.0.0.0}:${HOST_PORT:-3000}:${PORT:-3000}"
 
   mongodb:
+    platform: linux/amd64
     image: docker.io/bitnami/mongodb:${MONGODB_VERSION:-5.0}
     restart: always
     container_name: rocketchat-mongodb
     volumes:
       - mongodb_data:/bitnami/mongodb
     environment:
+      EXPERIMENTAL_DOCKER_DESKTOP_FORCE_QEMU: 1
       MONGODB_REPLICA_SET_MODE: primary
       MONGODB_REPLICA_SET_NAME: ${MONGODB_REPLICA_SET_NAME:-rs0}
       MONGODB_PORT_NUMBER: ${MONGODB_PORT_NUMBER:-27017}
